@@ -94,3 +94,13 @@ O envio será aceito enviando o URL do seu repositório clonado e um link do seu
 O link do Google Form para submissão será enviado pelo professor responsável pela comissão.
 
 Boa sorte e sucesso!
+
+
+password 
+
+
+dentistaAdmin
+admin123
+
+
+https://br-playground.digitalhouse.com/course/c4235c04-3fba-44ae-9a75-0d77d5e14d50/unit/d93447b5-7e4d-46d8-9c94-643fefb21209/lesson/e0ae9030-9330-49ad-ae72-ce2e13715578/topic/bbb73207-d52f-435d-874d-2cbdb3f9de8d

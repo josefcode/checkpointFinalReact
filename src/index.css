@@ -88,7 +88,7 @@ tr:nth-child(even) {
 }
 
 .dark h5{
-  color: white;
+  color: rgb(7, 7, 7);
 }
 
 @media(min-width: 786px) and (max-width: 1065px){

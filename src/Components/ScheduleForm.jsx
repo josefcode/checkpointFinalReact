@@ -1,19 +1,71 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./ScheduleForm.module.css";
 
 const ScheduleForm = () => {
+  const [dentists, setDentist] = useState([])
+  const [pacientes, setPacientes] = useState([])
   useEffect(() => {
+    fetch("https://dhodonto.ctdprojetos.com.br/dentista")
+    .then((res) =>res.json())
+    .then((data)=> setDentist(data))
+
+    fetch("https://dhodonto.ctdprojetos.com.br/paciente")
+    .then((res) =>res.json())
+    .then((data)=> setPacientes(data.body))
     //Nesse useEffect, você vai fazer um fetch na api buscando TODOS os dentistas
     //e pacientes e carregar os dados em 2 estados diferentes
   }, []);
 
-  const handleSubmit = (event) => {
+  let [formData, setFormData] = useState({
+    dentist: '',
+    patient: '',
+    date: '',
+  })
+  
+
+  const handleChange = (event) => {
+  
+    const { name , value} = event.target
+
+    setFormData(prev => {
+      return {
+        ...prev, 
+        [name]: value
+      }
+    })
+
+    // fetch('http://dhodonto.ctdprojetos.com.br/consulta', {
+    //   method: 'POST',
+    //   body: JSON.stringify(formData)
+    // }) 
+    // .then(res=>res.json())
+    // .then(data=>console.log(data))
+
     //Nesse handlesubmit você deverá usar o preventDefault,
     //obter os dados do formulário e enviá-los no corpo da requisição 
     //para a rota da api que marca a consulta
     //lembre-se que essa rota precisa de um Bearer Token para funcionar.
     //Lembre-se de usar um alerta para dizer se foi bem sucedido ou ocorreu um erro
   };
+  
+  const requestHeader = {
+    'Accept': "",
+    'Content-Type': 'application/json',
+    "Authorization": `Bearer ${localStorage.getItem('token')}`
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    fetch('http://dhodonto.ctdprojetos.com.br/consulta', {
+      method: 'POST',
+      headers: requestHeader,
+      body: JSON.stringify(formData)
+    }) 
+    .then(res=>res.json())
+    .then(data=>console.log(data))
+    console.log(formData)
+  }
 
   return (
     <>
@@ -29,22 +81,31 @@ const ScheduleForm = () => {
               <label htmlFor="dentist" className="form-label">
                 Dentist
               </label>
-              <select className="form-select" name="dentist" id="dentist">
+              <select className="form-select" name="dentist" id="dentist" value = {formData.dentist}
+              onChange={handleChange} 
+              >
                 {/*Aqui deve ser feito um map para listar todos os dentistas*/}
-                <option key={'Matricula do dentista'} value={'Matricula do dentista'}>
-                  {`Nome Sobrenome`}
+                { 
+                dentists.map((dentist, index) => <option key={index} value={dentist.nome}>
+                  {dentist.nome} {dentist.sobrenome}
                 </option>
+                )
+                }
               </select>
             </div>
             <div className="col-sm-12 col-lg-6">
               <label htmlFor="patient" className="form-label">
                 Patient
               </label>
-              <select className="form-select" name="patient" id="patient">
+              <select className="form-select" name="patient" id="patient" 
+              value ={formData.patient} onChange={handleChange}>
                 {/*Aqui deve ser feito um map para listar todos os pacientes*/}
-                <option key={'Matricula do paciente'} value={'Matricula do paciente'}>
-                  {`Nome Sobrenome`}
+                { 
+                pacientes.map((patient, index) => <option key={index} value={patient.nome} onChange={handleChange}>
+                  {patient.nome} {patient.sobrenome}
                 </option>
+                )
+                }
               </select>
             </div>
           </div>
@@ -56,8 +117,10 @@ const ScheduleForm = () => {
               <input
                 className="form-control"
                 id="appointmentDate"
-                name="appointmentDate"
+                name="date"
                 type="datetime-local"
+                value={formData.date}
+                onChange={handleChange}
               />
             </div>
           </div>
