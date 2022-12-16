@@ -80,7 +80,7 @@ tr:nth-child(even) {
 }
 
 .dark{
-  background-color: #12121296;
+  background-color: rgb(43, 42, 51);
   color: white;
 }
 .dark > a {

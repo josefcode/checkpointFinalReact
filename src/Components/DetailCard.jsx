@@ -9,10 +9,6 @@ const DetailCard = () => {
   const [dentist, setDentist] = useState([])
   const { id } = useParams();
 
-
-    console.log(dentist)
-
- 
   useEffect(() => {
     async function fetchData(){
 
@@ -24,11 +20,8 @@ const DetailCard = () => {
       setDentist(data)
     }
 
-
     fetchData()
-    
-    //Nesse useEffect, você vai fazer um fetch na api passando o 
-    //id do dentista que está vindo do react-router e carregar os dados em algum estado
+
   }, [id]);
 
   

@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import {useState} from 'react'
 import styles from "./Form.module.css";
+import { useLogin } from '../hooks/useLogin'
 //  usuario dentistaAdmin e admin123
   function LoginForm (){
-
+  const {changeLogin} = useLogin()
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
 
@@ -35,18 +36,15 @@ import styles from "./Form.module.css";
       .then(res=>res.json())
       .then(data=>localStorage.setItem('token', data.token))
       }catch(err){
-        console.error(err)
+        alert('ocorreu um erro' + err)
       }
     
-    alert('login foi bem sucedido')
+    alert('Login foi bem sucedido')
+
     navigate('/')
-    //Nesse handlesubmit você deverá usar o preventDefault,
-    //enviar os dados do formulário e enviá-los no corpo da requisição 
-    //para a rota da api que faz o login /auth
-    //lembre-se que essa rota vai retornar um Bearer Token e o mesmo deve ser salvo
-    //no localstorage para ser usado em chamadas futuras
-    //Com tudo ocorrendo corretamente, o usuário deve ser redirecionado a página principal,com react-router
-    //Lembre-se de usar um alerta para dizer se foi bem sucedido ou ocorreu um erro
+    
+    changeLogin(false)
+
   };
 
   return (

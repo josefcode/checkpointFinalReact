@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "./ScheduleForm.module.css";
+import {useDark} from '../hooks/useDark'
 
 const ScheduleForm = () => {
+  const { dark } = useDark()
+
   const [dentists, setDentist] = useState([])
   const [pacientes, setPacientes] = useState([])
+
   useEffect(() => {
     fetch("https://dhodonto.ctdprojetos.com.br/dentista")
     .then((res) =>res.json())
@@ -12,8 +16,7 @@ const ScheduleForm = () => {
     fetch("https://dhodonto.ctdprojetos.com.br/paciente")
     .then((res) =>res.json())
     .then((data)=> setPacientes(data.body))
-    //Nesse useEffect, você vai fazer um fetch na api buscando TODOS os dentistas
-    //e pacientes e carregar os dados em 2 estados diferentes
+
   }, []);
 
   let [formData, setFormData] = useState({
@@ -54,25 +57,33 @@ const ScheduleForm = () => {
     "Authorization": `Bearer ${localStorage.getItem('token')}`
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-
-    fetch('http://dhodonto.ctdprojetos.com.br/consulta', {
+    let json;
+  try{
+    const response = await fetch('http://dhodonto.ctdprojetos.com.br/consulta', {
       method: 'POST',
       headers: requestHeader,
       body: JSON.stringify(formData)
     }) 
-    .then(res=>res.json())
-    .then(data=>console.log(data))
-    console.log(formData)
+    json = await response.json()
+  } catch(error) {
+    alert('Tem algum error por favor tenta de novo', error);
   }
+
+  if (json) {
+    console.log('Use the JSON here!', json);
+  }
+
+  }
+  
 
   return (
     <>
       {/* //Na linha seguinte deverá ser feito um teste se a aplicação
         // está em dark mode e deverá utilizar o css correto */}
       <div
-        className={`text-center container}`
+        className={`text-center container ${dark ? styles.cardDark : ''}`
         }
       >
         <form onSubmit={handleSubmit}>

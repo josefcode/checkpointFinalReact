@@ -26,13 +26,19 @@
 
 .iconsDark{
   filter: brightness(0) invert(1);
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+
 }
 
 .dhLogo{
   max-width: 50%;
+  background-color: white;
 }
 
 .icon {
   max-width: 2rem;
   height: auto;
 }
+

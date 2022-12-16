@@ -5,6 +5,11 @@
 .navbarBrand::first-letter {
   color: #f21d1d;
 }
+.navbarDark {
+  font-size: 30px;
+  color: white
+}
+
 
 .navBarLink {
   text-decoration: none;
@@ -14,8 +19,19 @@
   transition: all 0.3s ease-in-out;
   font-weight: 700;
 }
+.darkNavBarLink a {
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 9px;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+  font-weight: 700;
+  color: white;
+}
+
 
 .btnStyle{
   width: 3rem;
   height: 3rem;
 }
+

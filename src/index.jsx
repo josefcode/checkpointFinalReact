@@ -12,6 +12,7 @@ import App from './App'
 import Detail from './Routes/Detail'
 import NoPage from "./Routes/NoPage";
 import { DarkProvider} from './hooks/useDark'
+import { LoginProvider} from './hooks/useLogin'
 import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
@@ -20,9 +21,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 //Lembre-se de configurar suas rotas e seu contexto aqui
 root.render(
   
-  <DarkProvider >
+ 
   <React.StrictMode>
   <BrowserRouter>
+  <DarkProvider >
+    <LoginProvider>
       <Routes>
           <Route path='/' element={<App/>}  >
             <Route index element={<Home />}  />
@@ -31,8 +34,10 @@ root.render(
             <Route path="*" element={<NoPage />} />
           </Route>
       </Routes>
+      </LoginProvider>
+      </DarkProvider>
     </BrowserRouter>
   </React.StrictMode>
-  </DarkProvider>
+ 
 
 );
